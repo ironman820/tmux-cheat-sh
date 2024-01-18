@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 if ! [ -e ~/.config/tmux/cht-langs ]; then
   echo "cpp|c|golang|lua|rust|typescript|javascript|nodejs|sql|zig|html|css|zsh|bash|python|tmux|gdb|radare2" | tr '|' '\n' > ~/.config/tmux/cht-langs
 fi
