@@ -11,7 +11,7 @@ open_info() {
   local query; \
     read -p "$(printf "Enter query for %s: " "$1")" query; \
   query=`echo $query | tr ' ' '+'`; \
-  tmux neww bash -c "echo \"cht.sh $1/$query\" & cht.sh $1/$query; echo \"Press any key to continue\"; read -rsn1"; \
+  tmux neww bash -c "echo \"cht.sh /$1/$query\" & cht.sh /$1/$query; echo \"Press any key to continue\"; read -rsn1"; \
   exit 0
 }
 
