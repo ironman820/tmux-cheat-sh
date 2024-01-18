@@ -11,4 +11,4 @@ tmux_get() {
 
 key="$(tmux_get '@cheat-sh-bind' 'i')"
 
-tmux bind-key "$key" run -b "$SCRIPT_DIR/cheat.sh";
+tmux bind-key "$key" display-popup -E "$SCRIPT_DIR/cheat.sh";
