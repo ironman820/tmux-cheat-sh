@@ -32,21 +32,20 @@ if [[ $# -ge 1 && "$1" != '' ]]; then
 fi
 
 open_info() {
+  local query
   read -p "Enter Query: " query
 
   query=`echo $query | tr ' ' '+'`
-  tmux neww bash -c "echo \"cht.sh $@/$query\" & cht.sh $@/$query & while [ : ]; do sleep 1; done"
+  tmux neww bash -c "echo \"cht.sh $1/$query\" & cht.sh $1/$query; echo \"Press any key to continue\"; read -rsn1"
+  exit 0
 }
 
-items="$(printf '%s|%s' $(cat ~/.config/tmux/cht-langs) $(cat ~/.config/tmux/cht-utils) |
+items="$(printf '%s|%s' $(cat ~/.config/tmux/cht-langs | tr '\n' '|') $(cat ~/.config/tmux/cht-utils | tr '\n' '|') |
     grep -v '^$' |
-    tr '\n' '|' | tr '|' '\n' |
+    tr '|' '\n' |
     sort -u |
     nl -w3 -s '  '
 )"
 [ -z "$items" ] && tmux display 'cht-sh: No languages or utilities found.' && exit
 
-fzf_filter <<< "$items" | awk '{print $2}' | \
-    while read -r chosen; do
-        open_url "$chosen" &>"/tmp/tmux-$(id -u)-fzf-url.log"
-    done
+open_info "$(fzf_filter <<< "$items" | awk '{print $2}')"
